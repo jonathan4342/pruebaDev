@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import * as SC from './Search.Styles'
 import { BiSearchAlt } from 'react-icons/bi'
 import { useAppDispatch } from '../../redux/store'
-import { getCasesCountryName } from '../../redux/actions'
+import { getCasesCountryName, getCasesCountryNameConfirmed } from '../../redux/actions'
 import { useDebounce } from "react-haiku"
 import { setCountryName } from '../../redux/slice'
 
@@ -14,6 +14,7 @@ export const Search = () => {
     const submit=(e:any)=>{
         e.preventDefault();
         dispatch(getCasesCountryName(input))
+        dispatch(getCasesCountryNameConfirmed(input))
     }
     return (
         <SC.SearchP>

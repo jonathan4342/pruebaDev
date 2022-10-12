@@ -1,6 +1,7 @@
 
 export interface initialCountrys {
     countryName:Props | null
+    casesConfirmed:Props | null
 }
 
 export interface Props {
@@ -20,6 +21,6 @@ export interface All {
     dates:               date
 }
 
-export interface date{
-    fecha:number;
+export interface date {
+    [key:string]: number;
 }

@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { initialCountrys } from '../interfaces/interfaces';
 
 const initialState:initialCountrys = {
-    countryName:null
+    countryName:null,
+    casesConfirmed:null
 }
 
 export const countrySlice = createSlice({
@@ -11,10 +12,13 @@ export const countrySlice = createSlice({
     reducers: {
         setCountryName:(initialState,{payload})=>{
             initialState.countryName=payload
+        },
+        setCountryNameConfirmed:(initialState,{payload})=>{
+            initialState.casesConfirmed=payload
         }
     }
 })
 
-export const {setCountryName} =countrySlice.actions
+export const {setCountryName,setCountryNameConfirmed} =countrySlice.actions
 
 export default countrySlice.reducer;
