@@ -1,13 +1,15 @@
 
-export interface initialCountrys {
-    countryName:Props | null
-    casesConfirmed:Props | null
+export interface initialCountries {
+    countryName:Response | null
+    casesConfirmed:Response | null
+    isGettingData: boolean
 }
 
-export interface Props {
-    All:All
+export interface Date {
+    [key:string]: number;
 }
-export interface All {
+
+export interface Country {
     country:             string;
     population:          number;
     sq_km_area:          number;
@@ -18,9 +20,15 @@ export interface All {
     location:            string;
     iso:                 number;
     capital_city:        string;
-    dates:               date
+    dates:               Date
 }
 
-export interface date {
-    [key:string]: number;
+export interface CountryResponse {
+    All?: Country
 }
+
+export interface CountriesResponse {
+    [key:string]:CountryResponse
+}
+
+export type Response = CountryResponse & CountriesResponse

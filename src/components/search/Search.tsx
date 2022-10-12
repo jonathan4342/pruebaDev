@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import * as SC from './Search.Styles'
+import React, { useState } from 'react'
 import { BiSearchAlt } from 'react-icons/bi'
+import { getGeneralCases } from '../../redux/actions'
+import { setIsGettingData } from '../../redux/slice'
 import { useAppDispatch } from '../../redux/store'
-import { getCasesCountryName, getCasesCountryNameConfirmed } from '../../redux/actions'
-import { useDebounce } from "react-haiku"
-import { setCountryName } from '../../redux/slice'
+import * as SC from './Search.Styles'
 
 export const Search = () => {
 
     const [input, setInput] = useState('')
     const dispatch = useAppDispatch()
 
-    const submit=(e:any)=>{
+    const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch(getCasesCountryName(input))
-        dispatch(getCasesCountryNameConfirmed(input))
+        dispatch(setIsGettingData(true))
+        await dispatch(getGeneralCases(input)).unwrap()
+        dispatch(setIsGettingData(false))
     }
     return (
         <SC.SearchP>
@@ -22,11 +22,7 @@ export const Search = () => {
                 <SC.Input
                     placeholder='Search for country'
                     value={input}
-                    onChange={
-                        (e) => {
-                            setInput(e.target.value)
-                        }
-                    } />
+                    onChange={(e) => { setInput(e.target.value) }} />
                 <SC.Icon >
                     <BiSearchAlt className='icon' />
                 </SC.Icon>

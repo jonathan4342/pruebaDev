@@ -1,24 +1,32 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { initialCountrys } from '../interfaces/interfaces';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { initialCountries, Response } from '../interfaces/interfaces';
 
-const initialState:initialCountrys = {
-    countryName:null,
-    casesConfirmed:null
+const initialState: initialCountries = {
+    countryName: null,
+    casesConfirmed: null,
+    isGettingData: false
 }
 
 export const countrySlice = createSlice({
     name: 'root',
     initialState,
     reducers: {
-        setCountryName:(initialState,{payload})=>{
-            initialState.countryName=payload
+        setCountryName: (initialState, { payload }: PayloadAction<Response>) => {
+            initialState.countryName = payload
         },
-        setCountryNameConfirmed:(initialState,{payload})=>{
-            initialState.casesConfirmed=payload
+        setCountryNameConfirmed: (initialState, { payload }: PayloadAction<Response>) => {
+            initialState.casesConfirmed = payload
+        },
+        setIsGettingData: (initialState, { payload }: PayloadAction<boolean>) => {
+            initialState.isGettingData = payload
         }
     }
 })
 
-export const {setCountryName,setCountryNameConfirmed} =countrySlice.actions
+export const {
+    setCountryName,
+    setCountryNameConfirmed,
+    setIsGettingData
+} = countrySlice.actions
 
 export default countrySlice.reducer;

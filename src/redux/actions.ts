@@ -1,20 +1,27 @@
-import axios from "axios"
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setCountryName ,setCountryNameConfirmed} from "./slice";
+import { adminApi } from "../api/adminApi";
+import { Response } from '../interfaces/interfaces';
+import { setCountryName, setCountryNameConfirmed, setIsGettingData } from "./slice";
 
-export const getCasesCountryName = createAsyncThunk(
-    'country',
-    async (name: string, thunkAPI) => {
-        const { dispatch } = thunkAPI;
-        const { data } = await axios.get(`https://covid-api.mmediagroup.fr/v1/history?country=${name}&status=deaths`)
-        dispatch(setCountryName(data))
-    }
-)
-export const getCasesCountryNameConfirmed = createAsyncThunk(
-    'country',
-    async (name: string, thunkAPI) => {
-        const { dispatch } = thunkAPI;
-        const { data } = await axios.get(`https://covid-api.mmediagroup.fr/v1/history?country=${name}&status=confirmed`)
-        dispatch(setCountryNameConfirmed(data))
+export const getGeneralCases = createAsyncThunk(
+    'generalCases',
+    async (name: string, { dispatch }) => {
+        const firstRequest = adminApi.get<Response>(`/history`, {
+            params: {
+                country: name,
+                status: 'confirmed'
+            }
+        })
+        const secondRequest = adminApi.get<Response>(`/history`, {
+            params: {
+                country: name,
+                status: 'deaths'
+            }
+        })
+        dispatch(setIsGettingData(true))
+        const [firstResponse,secondResponse] = await Promise.all([firstRequest, secondRequest])
+        dispatch(setCountryName(firstResponse.data))
+        dispatch(setCountryNameConfirmed(secondResponse.data))
+        dispatch(setIsGettingData(false))
     }
 )
