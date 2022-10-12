@@ -27,7 +27,6 @@ export const GlobalStyles = createGlobalStyle`
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #fff9;
         position: fixed;
         top: 0;
         left: 0

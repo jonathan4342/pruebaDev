@@ -1,7 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { formatNumber } from '../../helpers/helpers';
 import { RootState } from '../../redux/store';
 import * as SC from './Car.Styled';
+import {VscPerson} from 'react-icons/vsc';
+import {FaGlobeAmericas} from 'react-icons/fa';
+import {TbMap2} from 'react-icons/tb';
+import {GiDeathSkull} from 'react-icons/gi';
+import {GoGraph} from 'react-icons/go';
 
 export const Card = () => {
     const { countryName,casesConfirmed} = useSelector((state: RootState) => state.countrySlice)
@@ -30,14 +36,14 @@ export const Card = () => {
                     <h1>{countryName?.All.country}</h1>
                 </SC.Data>
                 <SC.Data>
-                    <span>Continent: {countryName?.All.continent}</span>
-                    <span>Population: {countryName?.All.population}</span>
-                    <span>Country area: {countryName?.All.sq_km_area} m<sup>2</sup></span>
-                    <span>Life expectancy: {countryName?.All.life_expectancy} Años</span>
+                    <span><FaGlobeAmericas/> Continent: {countryName?.All.continent}</span>
+                    <span><VscPerson/> Population: {formatNumber(countryName?.All.population)}</span>
+                    <span><TbMap2/> Country area: {formatNumber(countryName?.All.sq_km_area)} m<sup>2</sup></span>
+                    <span><GoGraph/> Life expectancy: {countryName?.All.life_expectancy} Años</span>
                 </SC.Data>
                 <SC.Data>
-                    <span>Number of current deaths: {dead[0]} dead</span>
-                    <span>number of confirmed cases : {confirmedCases[0]} dead</span>
+                    <span><GiDeathSkull/> Number of current deaths: {formatNumber(dead[0])} dead</span>
+                    <span>number of confirmed cases : {formatNumber(confirmedCases[0])} cases</span>
                 </SC.Data>
             </SC.CardData>
         </SC.ContCard>
