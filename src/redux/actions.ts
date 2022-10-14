@@ -1,11 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { adminApi } from "../api/adminApi";
+import { capitalizeFirstLetter } from '../helpers/helpers';
 import { Response } from '../interfaces/interfaces';
 import { setCountryName, setCountryNameConfirmed, setIsGettingData } from "./slice";
 
 export const getGeneralCases = createAsyncThunk(
     'generalCases',
     async (name: string, { dispatch }) => {
+        name=capitalizeFirstLetter(name)
         const firstRequest = adminApi.get<Response>(`/history`, {
             params: {
                 country: name,
