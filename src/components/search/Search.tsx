@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { BiSearchAlt } from 'react-icons/bi'
+import { capitalizeFirstLetter } from '../../helpers/helpers'
 import { getGeneralCases } from '../../redux/actions'
 import { setIsGettingData } from '../../redux/slice'
 import { useAppDispatch } from '../../redux/store'
@@ -13,7 +14,7 @@ export const Search = () => {
     const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(setIsGettingData(true))
-        await dispatch(getGeneralCases(input)).unwrap()
+        await dispatch(getGeneralCases(capitalizeFirstLetter(input))).unwrap()
         dispatch(setIsGettingData(false))
     }
     return (
